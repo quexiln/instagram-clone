@@ -1,0 +1,103 @@
+.main {
+  width: 319px;
+  height: 56px;
+  z-index: 0;
+  position: absolute;
+  flex-shrink: 0;
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 16px;
+}
+.profilePhoto {
+  left: -5px;
+  top: -5px;
+  height: 56px;
+  width: 56px;
+  border-radius: 50px;
+  background-size: 56px 56px;
+  background-repeat: no-repeat;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  user-select: none;
+}
+.profileInformations {
+  height: 36px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-start;
+  align-self: auto;
+  overflow-x: visible;
+  position: static;
+  min-height: 0px;
+  border-bottom-right-radius: 0px;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  flex-direction: column;
+  min-width: 0px;
+  background-color: transparent;
+  border-bottom-left-radius: 0px;
+  align-content: stretch;
+  overflow-y: visible;
+}
+.profileInformation {
+  color: black;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  align-items: flex-start;
+  padding-left: 10px;
+  text-decoration: none;
+}
+.username{
+  font-weight: 600;
+}
+.username:active{
+  color: rgba(0, 0, 0, 0.502);
+}
+
+.switchAccount {
+  cursor: pointer;
+  width: 63px;
+  height: 11px;
+  max-width: 100%;
+  z-index: 0;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  align-self: center;
+  flex-direction: column;
+  min-width: 0px;
+}
+.switchAccountText {
+  text-decoration: none;
+  width: 52px;
+  height: 16px;
+  line-height: 16px;
+  margin-top: 0px !important;
+  word-break: break-word;
+  color: rgb(0, 149, 246);
+  margin-left: 0px !important;
+  max-width: 100%;
+  font-size: 12px;
+  white-space: pre-line;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  display: block;
+  position: relative;
+  overflow-x: visible;
+  font-weight: 600;
+  overflow-wrap: break-word;
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+  min-width: 0px;
+  overflow-y: visible;
+}
