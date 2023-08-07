@@ -7,7 +7,7 @@ import { getProfileInformations } from "../../functions/GetProfileInformations";
 const ProfileSwitcher = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.userInformations);
-  const [profileInformations, setProfileInformations] = useState(null); // Initialize profileInformations with null
+  const [profileInformations, setProfileInformations] = useState(null); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +16,7 @@ const ProfileSwitcher = () => {
         setProfileInformations(response.checkData ? response : null);
       } catch (error) {
         console.error("Error fetching profile information:", error);
-        setProfileInformations(null); // Handle error by setting profileInformations to null
+        setProfileInformations(null); 
       }
     };
     fetchData();
@@ -24,7 +24,7 @@ const ProfileSwitcher = () => {
 
   return (
     <div>
-      {profileInformations && profileInformations.checkData ? ( // Check if profileInformations is truthy before accessing checkData
+      {profileInformations && profileInformations.checkData ? ( 
         <div className={styles.main}>
           <div
             className={styles.profilePhoto}
