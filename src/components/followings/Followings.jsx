@@ -1,39 +1,39 @@
 import React from "react";
-import styles from "./followers.module.css";
+import styles from "./followings.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-const Followers = ({ username, setFollowersView }) => {
+const Followings = ({ username, setFollowingsView }) => {
   const navigate = useNavigate();
-  const [followerList, setFollowerList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
   useEffect(() => {
-    const getFollowers = async () => {
+    const getFollowings = async () => {
       await axios
-        .post("http://localhost:8080/users/getFollowers", {
+        .post("http://localhost:8080/users/getFollowings", {
           username,
         })
         .then((res) => {
-          setFollowerList(res.data);
+          setFollowingList(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     };
 
-    getFollowers();
+    getFollowings();
   }, [username]);
 
   const handleClose = () => {
     navigate(`/${username}`);
-    setFollowersView(false);
+    setFollowingsView(false);
   };
   return (
     <div className={styles.main}>
       <div className={styles.gui}>
         <div className={styles.header}>
-          <div className={styles.title}>Takipçiler</div>
+          <div className={styles.title}>Takip ettikleri</div>
           <div onClick={handleClose} className={styles.close}>
             <svg
               aria-label="Kapat"
@@ -67,22 +67,22 @@ const Followers = ({ username, setFollowersView }) => {
             </svg>
           </div>
         </div>{" "}
-        <div className={styles.followerList}>
-          {followerList.map((follower, i) => (
+        <div className={styles.followedList}>
+          {followingList.map((followed, i) => (
             <div
               onClick={() => {
-                window.location.href = `/${follower.username}`;
+                window.location.href = `/${followed.username}`;
               }}
               key={i}
-              className={styles.follower}
+              className={styles.followed}
             >
               <div
                 className={styles.profilePhoto}
-                style={{ backgroundImage: `url(${follower.profilePhoto})` }}
+                style={{ backgroundImage: `url(${followed.profilePhoto})` }}
               ></div>
               <div className={styles.names}>
-                <div className={styles.username}>{follower.username}</div>
-                <div className={styles.nameSurname}>{follower.nameSurname}</div>
+                <div className={styles.username}>{followed.username}</div>
+                <div className={styles.nameSurname}>{followed.nameSurname}</div>
               </div>
             </div>
           ))}
@@ -92,4 +92,4 @@ const Followers = ({ username, setFollowersView }) => {
   );
 };
 
-export default Followers;
+export default Followings;

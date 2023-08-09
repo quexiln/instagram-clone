@@ -147,6 +147,11 @@
 }
 .numbers{
   margin-right: 40px;
+  text-decoration: none;
+  color: black;
+}
+.list:active{
+  filter: opacity(0.6);
 }
 .nameSurname{
   margin-top: 20px;

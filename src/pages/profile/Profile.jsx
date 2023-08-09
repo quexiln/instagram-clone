@@ -1,26 +1,35 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./profile.module.css";
 import Menu from "../../components/menu/Menu";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Follow } from "../../functions/follow/Follow";
 import { getProfileInformations } from "../../functions/GetProfileInformations";
 import { CheckFollowDispatch } from "../../functions/follow/CheckFollowDispatch";
 import { UnFollow } from "../../functions/follow/UnFollow";
+import Followers from "../../components/followers/Followers";
+import Followings from "../../components/followings/Followings";
 
 const Profile = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [followRegion, setFollowRegion] = useState({ display: "none" });
   const [checkData, setCheckData] = useState(true);
   const [checkFollow, setCheckFollow] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [pathName, setPathName] = useState(
-    String(location.pathname).toLowerCase().substring(1)
+    String(location.pathname).toLowerCase().replace(/\//g, "")
   );
-  const anyListView = String(location.pathname)
-    .toLowerCase()
-    .substring(1)
-    .split("/")[1];
+  const [listView, setListView] = useState(
+    String(location.pathname).toLowerCase().split("/")[
+      String(location.pathname).toLowerCase().split("/").length - 1
+    ]
+  );
+  const [followersView, setFollowersView] = useState(false);
+  const [followingsView, setFollowingsView] = useState(false);
 
   const [profileInformations, setProfileInformations] = useState({});
   const numberOfFollowers = useRef(null);
@@ -31,6 +40,15 @@ const Profile = () => {
   const { id } = useSelector((state) => state.userInformations);
 
   useEffect(() => {
+    if (listView === "followers" || listView === "followings") {
+      setPathName(pathName.replace(listView, ""));
+
+      if (listView === "followers") setFollowersView(true);
+      else setFollowersView(false);
+      if (listView === "followings") setFollowingsView(true);
+      else setFollowingsView(false);
+    }
+
     const fetchData = async () => {
       try {
         const profileData = await dispatch(getProfileInformations(pathName));
@@ -47,6 +65,7 @@ const Profile = () => {
 
     fetchCheckFollow();
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id, pathName]);
 
   useEffect(() => {
@@ -73,15 +92,12 @@ const Profile = () => {
     UnFollow(id, profileInformations.username);
     setCheckFollow(false);
   };
-
-  useEffect(() => {
-    if (!(anyListView === "followers" || anyListView === "following")) {
-      setPathName(
-        String(location.pathname).toLowerCase().substring(1).split("/")[0]
-      );
-      setCheckData(false);
-    }
-  }, [anyListView]);
+  const handleFollowers = () => {
+    setFollowersView(true);
+  };
+  const handleFollowings = () => {
+    setFollowingsView(true);
+  };
   return (
     <div>
       {checkData ? (
@@ -131,21 +147,29 @@ const Profile = () => {
                     </label>
                     gönderi
                   </div>
-                  <div className={styles.numbers}>
+                  <Link
+                    to={{ pathname: `/${pathName}/followers` }}
+                    onClick={handleFollowers}
+                    className={`${styles.numbers} ${styles.list}`}
+                  >
                     <label
                       ref={numberOfFollowers}
-                      style={{ fontWeight: "600" }}
+                      style={{ fontWeight: "600", cursor: "pointer" }}
                     >
                       {followers.length}&nbsp;
                     </label>
                     takipçi
-                  </div>
-                  <div className={styles.numbers}>
-                    <label style={{ fontWeight: "600" }}>
+                  </Link>
+                  <Link
+                    to={{ pathname: `/${pathName}/followings` }}
+                    onClick={handleFollowings}
+                    className={`${styles.numbers} ${styles.list}`}
+                  >
+                    <label style={{ fontWeight: "600", cursor: "pointer" }}>
                       {followings.length}&nbsp;
                     </label>
                     takip
-                  </div>
+                  </Link>
                 </div>
                 <div className={styles.nameSurname}>
                   {profileInformations.nameSurname}
@@ -153,6 +177,18 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          {followersView ? (
+            <Followers
+              username={pathName}
+              setFollowersView={setFollowersView}
+            />
+          ) : null}
+          {followingsView ? (
+            <Followings
+              username={pathName}
+              setFollowingsView={setFollowingsView}
+            />
+          ) : null}
         </div>
       ) : (
         <div className={styles.main}>

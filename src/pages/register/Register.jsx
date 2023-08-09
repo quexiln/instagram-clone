@@ -6,7 +6,7 @@ import PhoneNoOrGmail from "./registerEntries/phoneNoOrGmail/PhoneNoOrGmail";
 import NameSurname from "./registerEntries/nameSurname/NameSurname";
 import Username from "./registerEntries/username/Username";
 import Password from "./registerEntries/password/Password";
-import profilePhotoPath from "../../images/kca_ahmet.jpg";
+import profilePhotoPath from "../../images/profilePhoto.jpg";
 import { useDispatch } from "react-redux";
 import { setLoginId } from "../../stores/userInformations";
 

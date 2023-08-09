@@ -7,7 +7,7 @@ import { getProfileInformations } from "../../functions/GetProfileInformations";
 const ProfileSwitcher = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.userInformations);
-  const [profileInformations, setProfileInformations] = useState(null); 
+  const [profileInformations, setProfileInformations] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +16,7 @@ const ProfileSwitcher = () => {
         setProfileInformations(response.checkData ? response : null);
       } catch (error) {
         console.error("Error fetching profile information:", error);
-        setProfileInformations(null); 
+        setProfileInformations(null);
       }
     };
     fetchData();
@@ -24,7 +24,7 @@ const ProfileSwitcher = () => {
 
   return (
     <div>
-      {profileInformations && profileInformations.checkData ? ( 
+      {profileInformations && profileInformations.checkData ? (
         <div className={styles.main}>
           <div
             className={styles.profilePhoto}
@@ -33,7 +33,10 @@ const ProfileSwitcher = () => {
             }}
           />
           <div className={styles.profileInformations}>
-            <Link to={{pathname:`/${profileInformations.username}`}} className={`${styles.username} ${styles.profileInformation}`}>
+            <Link
+              to={{ pathname: `/${profileInformations.username}` }}
+              className={`${styles.username} ${styles.profileInformation}`}
+            >
               {profileInformations.username}
             </Link>
             <div
@@ -44,7 +47,10 @@ const ProfileSwitcher = () => {
             </div>
           </div>
           <div className={styles.switchAccount}>
-            <Link to={{ pathname: "/login" }} className={styles.switchAccountText}>
+            <Link
+              to={{ pathname: "/login" }}
+              className={styles.switchAccountText}
+            >
               Geçiş Yap
             </Link>
           </div>

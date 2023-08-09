@@ -161,9 +161,33 @@ router.post("/registerCheckUsername", async (req, res) => {
 router.post("/follow", async (req, res) => {
   try {
     const { followerId, followedUsername } = req.body;
+
+    const followedInformations = await User.findOne({
+      username: followedUsername,
+    });
+
+    if (!followedInformations) {
+      return res
+        .status(400)
+        .json({ message: "Takip edilecek kullanıcı bulunamadı" });
+    }
+
     const follower = await User.findOneAndUpdate(
       { _id: followerId },
-      { $addToSet: { followings: followedUsername } },
+      {
+        $addToSet: {
+          followings: {
+            _id: followedInformations._id,
+            username: followedInformations.username,
+            nameSurname: followedInformations.nameSurname,
+            profilePhoto: `data:${
+              followedInformations.profilePhoto.contentType
+            };base64,${followedInformations.profilePhoto.data.toString(
+              "base64"
+            )}`,
+          },
+        },
+      },
       {
         upsert: false,
         new: true,
@@ -171,10 +195,25 @@ router.post("/follow", async (req, res) => {
         useFindAndModify: false,
       }
     );
+
+    if (!follower) {
+      return res.status(400).json({ message: "Takipçi bulunamadı" });
+    }
 
     const followed = await User.findOneAndUpdate(
       { username: followedUsername },
-      { $addToSet: { followers: follower.username } },
+      {
+        $addToSet: {
+          followers: {
+            _id: follower._id,
+            username: follower.username,
+            nameSurname: follower.nameSurname,
+            profilePhoto: `data:${
+              follower.profilePhoto.contentType
+            };base64,${follower.profilePhoto.data.toString("base64")}`,
+          },
+        },
+      },
       {
         upsert: false,
         new: true,
@@ -183,21 +222,25 @@ router.post("/follow", async (req, res) => {
       }
     );
 
-    if (follower && followed) {
-      return;
+    if (followed) {
+      res.status(200).json({ message: "Takip işlemi başarılı" });
     } else {
-      res.status(400).json({ message: "Kullanıcı Bulunamadı" });
+      res
+        .status(400)
+        .json({ message: "Takip edilen kullanıcı güncellenemedi" });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
+
 router.post("/unFollow", async (req, res) => {
   try {
     const { followerId, followedUsername } = req.body;
+
     const follower = await User.findOneAndUpdate(
       { _id: followerId },
-      { $pull: { followings: followedUsername } },
+      { $pull: { followings: { username: followedUsername } } },
       {
         upsert: false,
         new: true,
@@ -208,7 +251,7 @@ router.post("/unFollow", async (req, res) => {
 
     const followed = await User.findOneAndUpdate(
       { username: followedUsername },
-      { $pull: { followers: follower.username } },
+      { $pull: { followers: { username: follower.username } } },
       {
         upsert: false,
         new: true,
@@ -218,14 +261,15 @@ router.post("/unFollow", async (req, res) => {
     );
 
     if (follower && followed) {
-      return;
+      res.status(200).json({ message: "Takipten çıkma işlemi başarılı" });
     } else {
-      res.status(400).json({ message: "Kullanıcı Bulunamadı" });
+      res.status(400).json({ message: "Kullanıcı bulunamadı" });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 });
+
 router.post("/checkFollow", async (req, res) => {
   try {
     const { followerId, followedUsername } = req.body;
@@ -233,19 +277,54 @@ router.post("/checkFollow", async (req, res) => {
     const followed = await User.findOne({ username: followedUsername });
 
     if (!follower || !followed) {
-      res.status(400).json(false);
+      res.status(400).json({ message: "Takipçi veya takip edilen bulunamadı" });
     } else if (followerId === followed._id.toString()) {
       res.json(true);
-    } else if (followed.followers.includes(follower.username)) {
+    } else if (
+      follower.followings.some((following) =>
+        following._id.equals(followed._id)
+      )
+    ) {
       res.json(true);
     } else {
-      res.status(400).json(false);
+      res.json(false);
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+router.post("/getFollowers", async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    } else {
+      res.json(user.followers);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/getFollowings", async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const user = await User.findOne({ username: username });
+
+    if (!user) {
+      res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    } else {
+      res.json(user.followings);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 router.get("/", (req, res) => {
   User.find({})
@@ -255,7 +334,7 @@ router.get("/", (req, res) => {
     })
     .catch((err) => {
       console.error("Kullanıcıları getirme hatası:", err);
-      res.status(500).send("Kullanıcıları getirme hatası.");
+      res.status(500).json({ message: err.message });
     });
 });
 
