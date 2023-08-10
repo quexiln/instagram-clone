@@ -4,7 +4,7 @@ import { Buffer } from "buffer";
 export const getProfileInformations = (input) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post("http://localhost:8080/users/getProfileInformations", { input });
+      const res = await axios.post("http://localhost:8080/dataBase/profile/profileInformations", { input });
 
       const buffer = Buffer.from(res.data.profilePhoto.data.data);
       let url = buffer.toString("base64");

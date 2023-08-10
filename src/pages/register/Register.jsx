@@ -58,7 +58,7 @@ const Register = () => {
       formData.append("profilePhoto", profilePhotoData);
       
       console.log(formData.profilePhoto);
-      await axios.post("http://localhost:8080/users/register", formData, {
+      await axios.post("http://localhost:8080/dataBase/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

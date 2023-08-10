@@ -11,7 +11,7 @@ const Followings = ({ username, setFollowingsView }) => {
   useEffect(() => {
     const getFollowings = async () => {
       await axios
-        .post("http://localhost:8080/users/getFollowings", {
+        .post("http://localhost:8080/dataBase/follow/getFollowings", {
           username,
         })
         .then((res) => {

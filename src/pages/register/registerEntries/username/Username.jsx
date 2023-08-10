@@ -14,7 +14,7 @@ const NameSurname = ({
   };
   const checkUsername = () => {
     axios
-      .post("http://localhost:8080/users/registerCheckUsername", {
+      .post("http://localhost:8080/dataBase/register/checkUsername", {
         username:String(username).toLowerCase(),
       })
       .then((res) => {

@@ -68,5 +68,7 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-size: 35px 35px;
+    background-size: 45px 45px;
+    background-repeat: no-repeat;
+    background-position: center;
 }

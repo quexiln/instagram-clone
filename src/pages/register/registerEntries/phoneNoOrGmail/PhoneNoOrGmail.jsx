@@ -16,7 +16,7 @@ const PhoneNoOrGmail = ({
   const checkPhoneNoOrGmail = () => {
     
     axios
-      .post("http://localhost:8080/users/registerCheckPhoneNoOrGmail", {
+      .post("http://localhost:8080/dataBase/register/checkPhoneNoOrGmail", {
         phoneNoOrGmail:String(phoneNoOrGmail).toLowerCase(),
       })
       .then((res) => {

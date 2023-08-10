@@ -84,7 +84,7 @@ const Profile = () => {
     setCheckFollow(true);
   };
   const handleUnFollow = () => {
-    if (followers.length > 0) {
+    if (followers.length >= 0) {
       const numberFollowers =
         parseInt(numberOfFollowers.current.textContent) - 1;
       numberOfFollowers.current.textContent = numberFollowers + " ";
