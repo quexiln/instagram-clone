@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./profileSwitcher.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProfileInformations } from "../../functions/GetProfileInformations";
+import { getProfileInformations } from "../../functions/profile/GetProfileInformations";
 
 const ProfileSwitcher = () => {
   const dispatch = useDispatch();

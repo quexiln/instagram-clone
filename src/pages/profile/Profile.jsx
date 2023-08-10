@@ -5,7 +5,7 @@ import Menu from "../../components/menu/Menu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Follow } from "../../functions/follow/Follow";
-import { getProfileInformations } from "../../functions/GetProfileInformations";
+import { getProfileInformations } from "../../functions/profile/GetProfileInformations";
 import { CheckFollowDispatch } from "../../functions/follow/CheckFollowDispatch";
 import { UnFollow } from "../../functions/follow/UnFollow";
 import Followers from "../../components/followers/Followers";
@@ -28,11 +28,13 @@ const Profile = () => {
       String(location.pathname).toLowerCase().split("/").length - 1
     ]
   );
+
+  const numberOfFollowers = useRef(null);
+  const numberOfFollowings = useRef(null);
+
   const [followersView, setFollowersView] = useState(false);
   const [followingsView, setFollowingsView] = useState(false);
-
   const [profileInformations, setProfileInformations] = useState({});
-  const numberOfFollowers = useRef(null);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -42,7 +44,7 @@ const Profile = () => {
   useEffect(() => {
     if (listView === "followers" || listView === "followings") {
       setPathName(pathName.replace(listView, ""));
-
+      document.body.style.overflow = "auto";
       if (listView === "followers") setFollowersView(true);
       else setFollowersView(false);
       if (listView === "followings") setFollowingsView(true);
@@ -67,6 +69,11 @@ const Profile = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, id, pathName]);
+
+  useEffect(() => {
+    document.body.style.overflow =
+      followersView || followingsView ? "hidden" : "auto";
+  }, [followersView, followingsView]);
 
   useEffect(() => {
     setFollowers(profileInformations.followers);
@@ -165,7 +172,10 @@ const Profile = () => {
                     onClick={handleFollowings}
                     className={`${styles.numbers} ${styles.list}`}
                   >
-                    <label style={{ fontWeight: "600", cursor: "pointer" }}>
+                    <label
+                      ref={numberOfFollowings}
+                      style={{ fontWeight: "600", cursor: "pointer" }}
+                    >
                       {followings.length}&nbsp;
                     </label>
                     takip
@@ -174,6 +184,9 @@ const Profile = () => {
                 <div className={styles.nameSurname}>
                   {profileInformations.nameSurname}
                 </div>
+                <div className={styles.biography}>
+                  {profileInformations.biography}
+                </div>
               </div>
             </div>
           </div>
@@ -181,12 +194,16 @@ const Profile = () => {
             <Followers
               username={pathName}
               setFollowersView={setFollowersView}
+              itself={id === profileInformations._id ? true : false}
+              numberOfFollowers={numberOfFollowers}
             />
           ) : null}
           {followingsView ? (
             <Followings
               username={pathName}
               setFollowingsView={setFollowingsView}
+              itself={id === profileInformations._id ? true : false}
+              numberOfFollowings={numberOfFollowings}
             />
           ) : null}
         </div>

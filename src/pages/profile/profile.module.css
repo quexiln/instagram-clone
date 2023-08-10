@@ -43,10 +43,10 @@
   max-width: 935px;
   overflow: hidden;
   word-wrap: break-word;
-  height: 100vh;
   display: flex;
   position: relative;
   justify-content: center;
+  border-bottom: 1px solid rgba(221, 221, 221);
 }
 
 .profilePhoto {
@@ -161,6 +161,17 @@
   line-height: 18px;
   font-weight: 600;
 }
+.biography{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  overflow: hidden;
+  width: 400px;
+  height: 72px;
+}
+
 
 .errorMessage {
   line-height: 30px;

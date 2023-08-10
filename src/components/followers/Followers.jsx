@@ -4,8 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { UnFollow } from "../../functions/follow/UnFollow";
 
-const Followers = ({ username, setFollowersView }) => {
+const Followers = ({
+  username,
+  setFollowersView,
+  itself,
+  numberOfFollowers,
+}) => {
   const navigate = useNavigate();
   const [followerList, setFollowerList] = useState([]);
   useEffect(() => {
@@ -69,21 +76,35 @@ const Followers = ({ username, setFollowersView }) => {
         </div>{" "}
         <div className={styles.followerList}>
           {followerList.map((follower, i) => (
-            <div
-              onClick={() => {
-                window.location.href = `/${follower.username}`;
-              }}
-              key={i}
-              className={styles.follower}
-            >
+            <div key={i} className={styles.follower}>
               <div
+                onClick={() => {
+                  window.location.href = `/${follower.username}`;
+                }}
                 className={styles.profilePhoto}
                 style={{ backgroundImage: `url(${follower.profilePhoto})` }}
               ></div>
-              <div className={styles.names}>
+              <div
+                className={styles.names}
+                onClick={() => {
+                  window.location.href = `/${follower.username}`;
+                }}
+              >
                 <div className={styles.username}>{follower.username}</div>
                 <div className={styles.nameSurname}>{follower.nameSurname}</div>
               </div>
+              {itself ? (
+                <div
+                  className={styles.unFollow}
+                  onClick={() => {
+                    window.location.reload()
+                    UnFollow(follower._id, username);
+
+                  }}
+                >
+                  Çıkar
+                </div>
+              ) : null}
             </div>
           ))}
         </div>

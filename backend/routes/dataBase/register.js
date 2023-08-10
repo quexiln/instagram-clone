@@ -29,6 +29,7 @@ router.post("/", upload.single("profilePhoto"), (req, res) => {
             username: username,
             password: password,
             profilePhoto: profilePhoto,
+            biography:""
           });
   
           user

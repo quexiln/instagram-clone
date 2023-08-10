@@ -10,9 +10,11 @@ export const getProfileInformations = (input) => {
       let url = buffer.toString("base64");
 
       return {
+        _id:res.data._id,
         username:res.data.username,
         nameSurname: res.data.nameSurname,
         profilePhoto: `data:${res.data.profilePhoto.contentType};base64,${url}`,
+        biography:res.data.biography,
         posts:res.data.posts,
         followers: res.data.followers,
         followings: res.data.followings,

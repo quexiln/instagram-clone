@@ -4,10 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { UnFollow } from "../../functions/follow/UnFollow";
+import { Follow } from "../../functions/follow/Follow";
 
-const Followings = ({ username, setFollowingsView }) => {
+const Followings = ({
+  username,
+  setFollowingsView,
+  itself,
+  numberOfFollowings,
+}) => {
   const navigate = useNavigate();
+
+  const [isFollowing, setIsFollowing] = useState(true);
   const [followingList, setFollowingList] = useState([]);
+  const { id } = useSelector((state) => state.userInformations);
+
   useEffect(() => {
     const getFollowings = async () => {
       await axios
@@ -69,21 +81,59 @@ const Followings = ({ username, setFollowingsView }) => {
         </div>{" "}
         <div className={styles.followedList}>
           {followingList.map((followed, i) => (
-            <div
-              onClick={() => {
-                window.location.href = `/${followed.username}`;
-              }}
-              key={i}
-              className={styles.followed}
-            >
+            <div key={i} className={styles.followed}>
               <div
+                onClick={() => {
+                  window.location.href = `/${followed.username}`;
+                }}
                 className={styles.profilePhoto}
                 style={{ backgroundImage: `url(${followed.profilePhoto})` }}
               ></div>
-              <div className={styles.names}>
+              <div
+                className={styles.names}
+                onClick={() => {
+                  window.location.href = `/${followed.username}`;
+                }}
+              >
                 <div className={styles.username}>{followed.username}</div>
                 <div className={styles.nameSurname}>{followed.nameSurname}</div>
               </div>
+              {itself ? (
+                <div>
+                  {isFollowing ? (
+                    <div
+                      className={styles.unFollow}
+                      onClick={() => {
+                        if (isFollowing) {
+                          UnFollow(id, followed.username);
+                          const numberFollowers =
+                            parseInt(numberOfFollowings.current.textContent) -
+                            1;
+                          numberOfFollowings.current.textContent =
+                            numberFollowers + " ";
+                          setIsFollowing(false);
+                        }
+                      }}
+                    >
+                      Takiptesin
+                    </div>
+                  ) : (
+                    <div
+                      className={styles.follow}
+                      onClick={() => {
+                        Follow(id, followed.username);
+                        const numberFollowers =
+                          parseInt(numberOfFollowings.current.textContent) + 1;
+                        numberOfFollowings.current.textContent =
+                          numberFollowers + " ";
+                        setIsFollowing(true);
+                      }}
+                    >
+                      Takip Et
+                    </div>
+                  )}
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
