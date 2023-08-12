@@ -8,8 +8,9 @@ import { Follow } from "../../functions/follow/Follow";
 import { getProfileInformations } from "../../functions/profile/GetProfileInformations";
 import { CheckFollowDispatch } from "../../functions/follow/CheckFollowDispatch";
 import { UnFollow } from "../../functions/follow/UnFollow";
-import Followers from "../../components/followers/Followers";
-import Followings from "../../components/followings/Followings";
+import Followers from "../../components/profile/followers/Followers";
+import Followings from "../../components/profile/followings/Followings";
+import Post from "../../components/profile/posts/Post";
 
 const Profile = () => {
   const location = useLocation();
@@ -189,6 +190,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+            <Post/>
           </div>
           {followersView ? (
             <Followers

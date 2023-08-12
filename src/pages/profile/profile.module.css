@@ -7,7 +7,6 @@
   grid-column: 1;
 }
 .body {
-  height: 2000px;
   grid-column: 2;
 }
 
@@ -40,6 +39,7 @@
   width: calc(100% - 40px);
   flex-grow: 1;
   margin: 0px auto 30px;
+  margin-bottom: 0;
   max-width: 935px;
   overflow: hidden;
   word-wrap: break-word;

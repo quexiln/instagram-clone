@@ -28,24 +28,32 @@ router.post("/profile", async (req, res) => {
 });
 
 router.post("/profileInformations", async (req, res) => {
-    try {
-      const { input } = req.body;
-      let user = await User.findOne({ username: input });
-  
-      if (!user) {
-        user = await User.findById(input);
-      }
-  
-      if (user) {
-        res.json(user);
-      } else {
-        res.status(404).json({ message: "Kullanıcı Bulunamadı" });
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Sunucu Hatası" });
-    }
-  });
+  try {
+    const { input } = req.body;
+    let user = await User.findOne({ username: input });
 
+    if (!user) {
+      user = await User.findById(input);
+    }
+
+    if (user) {
+      res.json({
+        _id: user._id,
+        username: user.username,
+        nameSurname: user.nameSurname,
+        profilePhoto: user.profilePhoto,
+        biography: user.biography,
+        posts: user.posts,
+        followers: user.followers,
+        followings: user.followings,
+      });
+    } else {
+      res.status(404).json({ message: "Kullanıcı Bulunamadı" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Sunucu Hatası" });
+  }
+});
 
 module.exports = router;

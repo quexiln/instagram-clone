@@ -1,0 +1,53 @@
+.main {
+  display: flex;
+  justify-content: center;
+}
+.body {
+  width: 975px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.choices {
+  display: flex;
+  margin: 0 auto;
+}
+.choice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 35px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 52px;
+  height: 52px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.svg {
+  margin: 0 5px;
+}
+.postsChoices {
+  border-top: 1px solid black;
+}
+.reels {
+  color: rgba(0, 0, 0, 0.6);
+}
+.tagged {
+  color: rgba(0, 0, 0, 0.6);
+}
+.posts{
+    width: 975px;
+}
+.post{
+    float: left;
+    margin: 1.5px;
+    width: 309px;
+    height: 309px;
+    background-size: 309px 309px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+}

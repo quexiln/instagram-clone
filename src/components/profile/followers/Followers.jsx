@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { UnFollow } from "../../functions/follow/UnFollow";
+import { UnFollow } from "../../../functions/follow/UnFollow";
+
 
 const Followers = ({
   username,
