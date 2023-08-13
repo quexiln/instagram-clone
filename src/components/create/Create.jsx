@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"; // useState ekledik
+import React, { useEffect, useState } from "react";
 import styles from "./create.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCreateTab } from "../../stores/tabs";
 import { getProfileInformations } from "../../functions/profile/GetProfileInformations";
+import CheckBox from "../checkBox/CheckBox";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,10 @@ const Create = () => {
   const { id } = useSelector((state) => state.userInformations);
   const [profileInformations, setProfileInformations] = useState(null);
   const [captionText, setCaptionText] = useState("");
+  const [locationText, setLocatinoText] = useState("");
+  const [advancedSettingsVisible, setAdvancedSettingsVisible] = useState(false);
+  const [interactionVisibility, setInteractionVisibility] = useState(false);
+  const [commenting, setCommenting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +30,6 @@ const Create = () => {
     };
     fetchData();
   }, [dispatch, id]);
-
 
   const handleClose = () => {
     dispatch(closeCreateTab());
@@ -64,11 +68,24 @@ const Create = () => {
 
   const captionTextInput = (e) => {
     const inputText = e.target.value;
-  
+
     if (inputText.length <= 2200) {
       setCaptionText(inputText);
     }
   };
+  const handleAdvancedSettings = () => {
+    setAdvancedSettingsVisible(!advancedSettingsVisible);
+    console.log(advancedSettingsVisible);
+  };
+  const handleInteractionVisibility = (e) => {
+    setInteractionVisibility(e.target.checked);
+  };
+  const handleCommenting = (e) => {
+    setCommenting(e.target.checked);
+  }; 
+  const inputLocationText = (e)=>{
+    setLocatinoText(e.target.value);
+  }
 
   return (
     <div>
@@ -77,7 +94,13 @@ const Create = () => {
         <div className={styles.finishing}>
           <div className={styles.title}>Yeni Gönderi Oluştur</div>
           <div className={styles.finishingBody}>
-            <img className={styles.post} src={URL.createObjectURL(selectedFile)} alt=""/>
+            <div className={styles.left}>
+              <img
+                className={styles.post}
+                src={URL.createObjectURL(selectedFile)}
+                alt=""
+              />
+            </div>
             <div className={styles.right}>
               <div className={styles.profile}>
                 <div
@@ -92,19 +115,126 @@ const Create = () => {
               </div>
               <div className={styles.caption}>
                 <textarea
-                  name=""
-                  id=""
                   onChange={captionTextInput}
                   className={styles.captionText}
-                  placeholder="Bir açıklama yaz..."
+                  placeholder="Açıklama yaz..."
                   value={captionText}
                 />
-                <div className={styles.captionTextLimit}>{captionText.length}/2200</div>
+                <div className={styles.captionTextLimit}>
+                  {captionText.length}/2200
+                </div>
               </div>
               <div className={styles.other}>
-                <div className={styles.location}></div>
-                <div className={styles.accessibility}></div>
-                <div className={styles.advancedSettings}></div>
+                <div className={styles.location}>
+                  <input
+                    type="text"
+                    placeholder="Konum Ekle"
+                    className={styles.locationText}
+                    value={locationText}
+                    onChange={inputLocationText}
+                  />
+                  <svg
+                    className={styles.locationSvg}
+                    aria-label="Konum ekle"
+                    color="black"
+                    fill="black"
+                    height="16"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="16"
+                  >
+                    <title>Konum ekle</title>
+                    <path d="M12.053 8.105a1.604 1.604 0 1 0 1.604 1.604 1.604 1.604 0 0 0-1.604-1.604Zm0-7.105a8.684 8.684 0 0 0-8.708 8.66c0 5.699 6.14 11.495 8.108 13.123a.939.939 0 0 0 1.2 0c1.969-1.628 8.109-7.424 8.109-13.123A8.684 8.684 0 0 0 12.053 1Zm0 19.662C9.29 18.198 5.345 13.645 5.345 9.66a6.709 6.709 0 0 1 13.417 0c0 3.985-3.944 8.538-6.709 11.002Z"></path>
+                  </svg>
+                </div>
+                <div className={styles.accessibility}>
+                  <p className={styles.settingsText}>Erişebilirlik</p>{" "}
+                  <svg
+                    className={styles.arrow}
+                    aria-label="Aşağı Ok Simgesi"
+                    color="rgb(0, 0, 0)"
+                    fill="rgb(0, 0, 0)"
+                    height="16"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="16"
+                  >
+                    <title>Aşağı Ok Simgesi</title>
+                    <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
+                  </svg>
+                </div>
+                <div
+                  className={styles.advancedSettingTitle}
+                  onClick={handleAdvancedSettings}
+                  style={
+                    advancedSettingsVisible ? { borderBottom: "none" } : null
+                  }
+                >
+                  <p
+                    className={styles.settingsText}
+                    style={advancedSettingsVisible ? { fontWeight: 600 } : null}
+                  >
+                    Gelişmiş Ayarlar
+                  </p>
+                  <svg
+                    className={styles.arrow}
+                    style={
+                      advancedSettingsVisible ? { transform: "scale(1)" } : null
+                    }
+                    aria-label="Aşağı Ok Simgesi"
+                    color="rgb(0, 0, 0)"
+                    fill="rgb(0, 0, 0)"
+                    height="16"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="16"
+                  >
+                    <title>Aşağı Ok Simgesi</title>
+                    <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
+                  </svg>
+                </div>
+                {advancedSettingsVisible ? (
+                  <div className={styles.advancedSettings}>
+                    <div className={styles.interactionVisibility}>
+                      <div className={styles.advancedSettingsHeader}>
+                        <div className={styles.advancedSettingsTitle}>
+                          Bu gönderideki beğenme ve görüntüleme sayılarını gizle
+                        </div>
+                        <div className={styles.advancedSettingsCheckBox}>
+                          <CheckBox
+                            funct={handleInteractionVisibility}
+                            value={interactionVisibility}
+                          />
+                        </div>
+                      </div>
+                      <div className={styles.advancedSettingsText}>
+                        Sadece sen bu gönderideki toplam beğenme ve görüntüleme
+                        sayısını göreceksin. Daha sonra bunu değiştirmek
+                        istersen, gönderinin en üstündeki ⋮ menüsüne
+                        gidebilirsin. Diğer kişilerin gönderilerindeki beğenme
+                        sayısını gizlemek için hesap ayarlarına git. Daha fazla
+                        bilgi al
+                      </div>
+                    </div>
+                    <div className={styles.commenting}>
+                      <div className={styles.advancedSettingsHeader}>
+                        <div className={styles.advancedSettingsTitle}>
+                          Yorum yapmayı kapat
+                        </div>
+                        <div className={styles.advancedSettingsCheckBox}>
+                          <CheckBox
+                            funct={handleCommenting}
+                            value={commenting}
+                          />
+                        </div>
+                      </div>
+                      <div className={styles.advancedSettingsText}>
+                        Bunu daha sonra gönderinin başındaki ... menüsüne
+                        giderek değiştirebilirsin.
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
