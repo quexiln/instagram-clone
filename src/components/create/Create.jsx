@@ -77,12 +77,7 @@ const Create = () => {
     setAdvancedSettingsVisible(!advancedSettingsVisible);
     console.log(advancedSettingsVisible);
   };
-  const handleInteractionVisibility = (e) => {
-    setInteractionVisibility(e.target.checked);
-  };
-  const handleCommenting = (e) => {
-    setCommenting(e.target.checked);
-  }; 
+
   const inputLocationText = (e)=>{
     setLocatinoText(e.target.value);
   }
@@ -201,9 +196,10 @@ const Create = () => {
                           Bu gönderideki beğenme ve görüntüleme sayılarını gizle
                         </div>
                         <div className={styles.advancedSettingsCheckBox}>
+                          
                           <CheckBox
-                            funct={handleInteractionVisibility}
                             value={interactionVisibility}
+                            setValue={setInteractionVisibility}
                           />
                         </div>
                       </div>
@@ -223,8 +219,8 @@ const Create = () => {
                         </div>
                         <div className={styles.advancedSettingsCheckBox}>
                           <CheckBox
-                            funct={handleCommenting}
                             value={commenting}
+                            setValue={setCommenting}
                           />
                         </div>
                       </div>
