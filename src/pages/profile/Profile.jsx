@@ -10,7 +10,7 @@ import { CheckFollowDispatch } from "../../functions/follow/CheckFollowDispatch"
 import { UnFollow } from "../../functions/follow/UnFollow";
 import Followers from "../../components/profile/followers/Followers";
 import Followings from "../../components/profile/followings/Followings";
-import Post from "../../components/profile/posts/Post";
+import Posts from "../../components/profile/posts/Posts";
 
 const Profile = () => {
   const location = useLocation();
@@ -40,7 +40,7 @@ const Profile = () => {
   const [followings, setFollowings] = useState([]);
   const [posts, setPosts] = useState([]);
 
-  const { id } = useSelector((state) => state.userInformations);
+  const { id, username } = useSelector((state) => state.userInformations);
 
   useEffect(() => {
     if (listView === "followers" || listView === "followings") {
@@ -190,13 +190,13 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <Post/>
+            <Posts username={pathName} />
           </div>
           {followersView ? (
             <Followers
               username={pathName}
               setFollowersView={setFollowersView}
-              itself={id === profileInformations._id ? true : false}
+              itself={username === profileInformations.username ? true : false}
               numberOfFollowers={numberOfFollowers}
             />
           ) : null}
@@ -204,7 +204,7 @@ const Profile = () => {
             <Followings
               username={pathName}
               setFollowingsView={setFollowingsView}
-              itself={id === profileInformations._id ? true : false}
+              itself={username === profileInformations.username ? true : false}
               numberOfFollowings={numberOfFollowings}
             />
           ) : null}

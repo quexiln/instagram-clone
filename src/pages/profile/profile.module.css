@@ -46,7 +46,6 @@
   display: flex;
   position: relative;
   justify-content: center;
-  border-bottom: 1px solid rgba(221, 221, 221);
 }
 
 .profilePhoto {

@@ -33,7 +33,90 @@
   text-align: center;
   border-bottom: 1.5px solid rgba(221, 221, 221);
 }
-
+.header{
+  flex: none;
+  height: 42px;
+  line-height: 42px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1.5px solid rgba(221, 221, 221);
+  display: flex;
+  justify-content: space-between;
+}
+.share{
+  cursor: pointer;
+  color-scheme: light;
+  direction: ltr;
+  color: rgb(25,149,246);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 14px;
+  line-height: 14px;
+  pointer-events: all;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  flex-grow: 0;
+  padding-bottom: 16px;
+  position: relative;
+  justify-content: flex-start;
+  align-self: auto;
+  padding-right: 16px;
+  overflow-x: visible;
+  align-items: stretch;
+  padding-left: 16px;
+  flex-shrink: 0;
+  border-bottom-right-radius: 0;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  background-color: transparent;
+  border-bottom-left-radius: 0;
+  align-content: stretch;
+  overflow-y: visible;
+  padding-top: 16px;
+}
+.share:hover{
+  color: #2851A3;
+}
+.turnBack{
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+  direction: ltr;
+  color: black;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 14px;
+  line-height: 14px;
+  pointer-events: all;
+  border-top: 0;
+  border-bottom: 0;
+  outline: none;
+  text-decoration: none;
+  list-style: none;
+  margin-right: 0;
+  text-align: inherit;
+  border-right: 0;
+  border-top-style: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: 0;
+  padding-right: 8px;
+  border-bottom-style: none;
+  padding-top: 8px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  box-sizing: border-box;
+  margin-bottom: 0;
+  border-left: 0;
+  border-right-style: none;
+  margin-top: 0;
+  touch-action: manipulation;
+  background-color: transparent;
+  justify-content: center;
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
 .body {
   flex: 1;
   display: flex;

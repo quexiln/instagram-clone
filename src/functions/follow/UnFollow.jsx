@@ -1,11 +1,12 @@
 import axios from "axios";
 
 
-export const UnFollow = async (followerId, followedUsername) => {
+export const UnFollow = async (followerInput, followedInput ,followingsTab=false) => {
   await axios
     .post("http://localhost:8080/dataBase/follow/unFollow", {
-      followerId,
-      followedUsername
+      followerInput,
+      followedInput,
+      followingsTab
     })
 };
 

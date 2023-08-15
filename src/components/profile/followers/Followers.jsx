@@ -98,7 +98,7 @@ const Followers = ({
                   className={styles.unFollow}
                   onClick={() => {
                     window.location.reload()
-                    UnFollow(follower._id, username);
+                    UnFollow(follower.username, username,true);
 
                   }}
                 >

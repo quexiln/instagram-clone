@@ -3,7 +3,7 @@ import styles from "./login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setLoginId } from "../../stores/userInformations";
+import { setLoginId, setMyUsername } from "../../stores/userInformations";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
   }, []);
   const handleLogin = () => {
     axios
@@ -28,6 +29,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         dispatch(setLoginId(res.data._id));
+        dispatch(setMyUsername(res.data.username));
         navigate("/");
       })
       .catch((err) => {

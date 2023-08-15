@@ -8,7 +8,7 @@ import Username from "./registerEntries/username/Username";
 import Password from "./registerEntries/password/Password";
 import profilePhotoPath from "../../images/profilePhoto.jpg";
 import { useDispatch } from "react-redux";
-import { setLoginId } from "../../stores/userInformations";
+import { setLoginId, setMyUsername } from "../../stores/userInformations";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -57,7 +57,6 @@ const Register = () => {
       formData.append("password", password);
       formData.append("profilePhoto", profilePhotoData);
       
-      console.log(formData.profilePhoto);
       await axios.post("http://localhost:8080/dataBase/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -65,6 +64,7 @@ const Register = () => {
       })
       .then((res) => {
         dispatch(setLoginId(res.data._id));
+        dispatch(setMyUsername(res.data.username));
         navigate("/");
       })
       .catch((err) => {

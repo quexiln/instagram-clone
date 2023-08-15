@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./post.module.css";
-import img from "../../../images/ataturk.webp";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-const Post = () => {
-  const [posts, setPosts] = useState([img,img,img,img,img,img]);
+const Post = ({ username }) => {
+  const [posts, setPosts] = useState([]);
+  const { id } = useSelector((state) => state.userInformations);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      await axios
+        .post("http://localhost:8080/dataBase/posts/get", { username })
+        .then((res) => {
+          setPosts(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getPosts();
+  }, [id]);
 
   return (
     <div className={styles.main}>
@@ -181,7 +197,15 @@ const Post = () => {
         <div className={styles.posts}>
           {posts.map((post, i) => (
             // eslint-disable-next-line jsx-a11y/alt-text
-            <img key={i} className={styles.post} src={post}/>
+            <div
+              key={i}
+              className={styles.post}
+              style={{
+                backgroundImage: `url(data:${
+                  post.post.contentType
+                };base64,${post.post.data.toString("base64")})`,
+              }}
+            />
           ))}
         </div>
       </div>

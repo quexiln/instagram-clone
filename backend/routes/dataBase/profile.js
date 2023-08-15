@@ -38,7 +38,6 @@ router.post("/profileInformations", async (req, res) => {
 
     if (user) {
       res.json({
-        _id: user._id,
         username: user.username,
         nameSurname: user.nameSurname,
         profilePhoto: user.profilePhoto,

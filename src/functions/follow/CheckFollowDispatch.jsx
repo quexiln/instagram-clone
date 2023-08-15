@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const CheckFollowDispatch = (followerId, followedUsername) => {
+export const CheckFollowDispatch = (followerInput, followedInput) => {
   return async (dispatch) => {
     try {
       const res = await axios.post("http://localhost:8080/dataBase/follow/checkFollow", {
-        followerId,
-        followedUsername,
+        followerInput,
+        followedInput,
       });
 
       if (res.data) {

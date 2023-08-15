@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeCreateTab } from "../../stores/tabs";
 import { getProfileInformations } from "../../functions/profile/GetProfileInformations";
 import CheckBox from "../checkBox/CheckBox";
+import axios from "axios";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,25 @@ const Create = () => {
   const [advancedSettingsVisible, setAdvancedSettingsVisible] = useState(false);
   const [interactionVisibility, setInteractionVisibility] = useState(false);
   const [commenting, setCommenting] = useState(false);
+
+  const share = async () => {
+    let formData = new FormData();
+
+    formData.append("id", id);
+    formData.append("post", selectedFile);
+    formData.append("captionText", captionText);
+    formData.append("locationText", locationText);
+    formData.append("interactionVisibility", interactionVisibility);
+    formData.append("commenting", commenting);
+
+    await axios.post("http://localhost:8080/dataBase/posts/create", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    dispatch(closeCreateTab());
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,16 +98,64 @@ const Create = () => {
     console.log(advancedSettingsVisible);
   };
 
-  const inputLocationText = (e)=>{
+  const inputLocationText = (e) => {
     setLocatinoText(e.target.value);
-  }
+  };
 
   return (
     <div>
       <div className={styles.background} onClick={handleClose}></div>
       {finishing ? (
         <div className={styles.finishing}>
-          <div className={styles.title}>Yeni Gönderi Oluştur</div>
+          <div className={styles.header}>
+            <div
+              className={styles.turnBack}
+              onClick={() => {
+                setFinishing(false);
+                setCaptionText("");
+                setLocatinoText("");
+                setInteractionVisibility(false);
+                setCommenting(false);
+                setAdvancedSettingsVisible(false);
+              }}
+            >
+              <svg
+                aria-label="Geri"
+                color="rgb(0, 0, 0)"
+                fill="rgb(0, 0, 0)"
+                height="24"
+                role="img"
+                viewBox="0 0 24 24"
+                width="24"
+              >
+                <title>Geri</title>
+                <line
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  x1="2.909"
+                  x2="22.001"
+                  y1="12.004"
+                  y2="12.004"
+                ></line>
+                <polyline
+                  fill="none"
+                  points="9.276 4.726 2.001 12.004 9.276 19.274"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                ></polyline>
+              </svg>
+            </div>
+            <div className={styles.title}>Yeni Gönderi Oluştur</div>
+            <div onClick={share} className={styles.share}>
+              Paylaş
+            </div>
+          </div>
+
           <div className={styles.finishingBody}>
             <div className={styles.left}>
               <img
@@ -196,7 +264,6 @@ const Create = () => {
                           Bu gönderideki beğenme ve görüntüleme sayılarını gizle
                         </div>
                         <div className={styles.advancedSettingsCheckBox}>
-                          
                           <CheckBox
                             value={interactionVisibility}
                             setValue={setInteractionVisibility}

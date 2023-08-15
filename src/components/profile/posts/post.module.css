@@ -3,7 +3,8 @@
   justify-content: center;
 }
 .body {
-  width: 975px;
+  border-top: 1px solid rgba(221, 221, 221);
+  width: 941.5px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -21,7 +22,7 @@
     Arial, sans-serif;
   font-size: 12px;
   font-weight: 500;
-  line-height: 52px;
+  line-height: 12px;
   height: 52px;
   letter-spacing: 1px;
   cursor: pointer;
@@ -29,7 +30,7 @@
 .svg {
   margin: 0 5px;
 }
-.postsChoices {
+.postsChoice {
   border-top: 1px solid black;
 }
 .reels {
@@ -38,16 +39,20 @@
 .tagged {
   color: rgba(0, 0, 0, 0.6);
 }
-.posts{
-    width: 975px;
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 941.5px;
+  min-width: 309px;
 }
-.post{
-    float: left;
-    margin: 1.5px;
-    width: 309px;
-    height: 309px;
-    background-size: 309px 309px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: black;
+.post {
+  cursor: pointer;
+  float: left;
+  margin: 1.5px;
+  width: 309px;
+  height: 309px;
+  background-size: 309px 309px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: black;
 }

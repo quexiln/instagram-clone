@@ -20,6 +20,8 @@ router.use("/register", require("./dataBase/register"));
 
 router.use("/follow", require("./dataBase/follow"));
 
+router.use("/posts", require("./dataBase/posts"));
+
 
 router.get("/", (req, res) => {
   User.find({})
