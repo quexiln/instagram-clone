@@ -36,6 +36,7 @@ const Create = () => {
     });
 
     dispatch(closeCreateTab());
+    window.location.reload();
   };
 
   useEffect(() => {

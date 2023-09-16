@@ -11,6 +11,7 @@ import { UnFollow } from "../../functions/follow/UnFollow";
 import Followers from "../../components/profile/followers/Followers";
 import Followings from "../../components/profile/followings/Followings";
 import Posts from "../../components/profile/posts/Posts";
+import { setLastPage, setLastTab } from "../../stores/tabs";
 
 const Profile = () => {
   const location = useLocation();
@@ -123,7 +124,8 @@ const Profile = () => {
               />
               <div className={styles.profileInformations}>
                 <div className={styles.profileInformationsTopSide}>
-                  <div className={styles.username}>
+                {/* onClick={()=>{window.history.replaceState(null, "Instagram", "/p")}} */}
+                  <div className={styles.username} >
                     {profileInformations.username}
                   </div>
                   <div style={followRegion}>

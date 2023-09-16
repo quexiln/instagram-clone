@@ -1,0 +1,39 @@
+.main {
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: 244px 1fr;
+}
+
+.leftMenu {
+  grid-column: 1;
+  height: 100%;
+}
+.body {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.postBody {
+  margin-top: 30px;
+  width: 975px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+.leftSide {
+  width: 599px;
+  height: 599px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.postImage {
+  border: 1px solid rgb(219, 219, 219);
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+}

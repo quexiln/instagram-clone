@@ -20,6 +20,30 @@ router.post("/get", async (req, res) => {
   }
 });
 
+router.post("/getWithId", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const user = await User.findOne({ "posts.id": id });
+
+    if (!user) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    }
+
+    const post = user.posts.find(p => p.id === id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Belirtilen id ile post bulunamadı" });
+    }
+
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
 const upload = multer();
 
 router.post("/create", upload.single("post"), async (req, res) => {

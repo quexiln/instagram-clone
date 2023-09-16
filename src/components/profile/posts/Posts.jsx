@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./post.module.css";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { openPost, setLastTab } from "../../../stores/tabs";
 
 const Post = ({ username }) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
   const [posts, setPosts] = useState([]);
   const { id } = useSelector((state) => state.userInformations);
 
@@ -195,9 +199,14 @@ const Post = ({ username }) => {
           </div>
         </div>
         <div className={styles.posts}>
-          {posts.map((post, i) => (
+          {[...posts].reverse().map((post, i) => (
             // eslint-disable-next-line jsx-a11y/alt-text
             <div
+              onClick={() => {
+                dispatch(setLastTab(location.pathname));
+                window.history.replaceState(null, "Instagram", `/p/${post.id}`);
+                dispatch(openPost());
+              }}
               key={i}
               className={styles.post}
               style={{
