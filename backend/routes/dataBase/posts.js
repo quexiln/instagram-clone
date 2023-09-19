@@ -30,19 +30,22 @@ router.post("/getWithId", async (req, res) => {
       return res.status(404).json({ message: "Kullanıcı bulunamadı" });
     }
 
-    const post = user.posts.find(p => p.id === id);
+    const post = user.posts.find((p) => p.id === id);
 
     if (!post) {
-      return res.status(404).json({ message: "Belirtilen id ile post bulunamadı" });
+      return res
+        .status(404)
+        .json({ message: "Belirtilen id ile post bulunamadı" });
     }
-
-    res.json(post);
+    res.json({
+      ...post,
+      username: user.username,
+      profilePhoto: user.profilePhoto,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
-
 
 const upload = multer();
 
